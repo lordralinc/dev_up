@@ -1,39 +1,6 @@
-from typing import Any, List
+from typing import List
 
 from pydantic import BaseModel
-
-
-class FeedbackInfo(BaseModel):
-    website: str
-    email: str
-    vk: str
-    inst: str
-    twitt: str
-    telegram: str
-    git: str
-    npm: str
-
-
-class AuthorInfo(BaseModel):
-    nickname: str
-    first_name: str
-    last_name: str
-    feedback: FeedbackInfo
-
-
-class ApiInfo(BaseModel):
-    limit_api: int
-    limit_api_day: int
-    used_api: int
-
-
-class BaseResponseModel(BaseModel):
-    response: Any
-    author: AuthorInfo
-
-
-class ResponseModel(BaseModel):
-    api: ApiInfo
 
 
 class Description(BaseModel):
