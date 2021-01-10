@@ -8,6 +8,10 @@
 pip install -U https://github.com/lordralinc/dev_up/archive/master.zip
 ```
 
+
+## Получение токена
+[dev-up.ru](https://dev-up.ru/lk)
+
 ## Использование
 
 ```python
