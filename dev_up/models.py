@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
@@ -16,7 +16,8 @@ class Description(BaseModel):
 
 class Stickers(BaseModel):
     count: int
-    packs_name: List[str]
+    packs_name: Union[List[str], str]
+    packs_id: Optional[str]
 
 
 class GetStickers(BaseModel):
@@ -44,7 +45,7 @@ class Group(BaseModel):
 class GetGroups(BaseModel):
     user_id: int
     count: int
-    groups: List[Group]
+    groups: Optional[List[Group]]
     description: Description
 
 
@@ -67,7 +68,7 @@ class App(BaseModel):
 class GetApps(BaseModel):
     user_id: int
     count: int
-    apps: List[App]
+    apps: Optional[List[App]]
     description: Description
 
 
