@@ -1,6 +1,6 @@
 # DEV UP API wrapper
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
 ![PyPI](https://img.shields.io/pypi/v/dev-up)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dev-up)
 ![GitHub](https://img.shields.io/github/license/lordralinc/idm_lp)
@@ -22,6 +22,7 @@ from dev_up import DevUpAPI
 
 api = DevUpAPI("token")
 profile = api.profile.get()
+stickers = api.vk.get_stickers(1)
 ```
 
 ## Методы
