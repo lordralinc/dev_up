@@ -17,7 +17,7 @@ class Description(BaseModel):
 class Stickers(BaseModel):
     count: int
     packs_name: Union[List[str], str]
-    packs_id: Optional[List[int], str]
+    packs_id: Optional[Union[List[int], str]]
 
 
 class GetStickers(BaseModel):

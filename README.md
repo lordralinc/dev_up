@@ -4,7 +4,6 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dev-up)
 ![GitHub](https://img.shields.io/github/license/lordralinc/idm_lp)
 
-
 ## Установка 
 ```shell
 pip install -U https://github.com/lordralinc/dev_up/archive/master.zip
