@@ -37,6 +37,21 @@ class VkAPICategories(BaseAPICategories):
             **self.api.make_request('vk.getApps', dict(user_id=user_id))
         )
 
+    async def get_stickers_async(self, user_id: int) -> VkGetStickersResponse:
+        return VkGetStickersResponse(
+            **await self.api.make_request_async('vk.getStickers', dict(user_id=user_id))
+        )
+
+    async def get_groups_async(self, user_id: int) -> VkGetGroupsResponse:
+        return VkGetGroupsResponse(
+            **await self.api.make_request_async('vk.getGroups', dict(user_id=user_id))
+        )
+
+    async def get_apps_async(self, user_id: int) -> VkGetAppsResponse:
+        return VkGetAppsResponse(
+            **await self.api.make_request_async('vk.getApps', dict(user_id=user_id))
+        )
+
 
 class ProfileAPICategories(BaseAPICategories):
 
@@ -45,12 +60,22 @@ class ProfileAPICategories(BaseAPICategories):
             **self.api.make_request('profile.get')
         )
 
+    async def get_async(self):
+        return ProfileGetResponse(
+            **await self.api.make_request_async('profile.get')
+        )
+
 
 class AudioAPICategories(BaseAPICategories):
 
     def speech(self, url: str) -> AudioSpeechResponse:
         return AudioSpeechResponse(
             **self.api.make_request('audio.speech', data=dict(url=url))
+        )
+
+    async def speech_async(self, url: str) -> AudioSpeechResponse:
+        return AudioSpeechResponse(
+            **await self.api.make_request_async('audio.speech', data=dict(url=url))
         )
 
 

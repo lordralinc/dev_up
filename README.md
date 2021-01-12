@@ -9,6 +9,13 @@
 pip install -U https://github.com/lordralinc/dev_up/archive/master.zip
 ```
 
+или 
+
+```shell
+pip install dev_up
+```
+
+
 
 ## Получение токена
 [dev-up.ru](https://dev-up.ru/lk)
@@ -21,6 +28,17 @@ from dev_up import DevUpAPI
 api = DevUpAPI("token")
 profile = api.profile.get()
 stickers = api.vk.get_stickers(1)
+```
+
+```python
+# Асинхронное использование
+from dev_up import DevUpAPI
+
+api = DevUpAPI("token")
+profile = await api.profile.get_async()
+stickers = await api.vk.get_stickers_async(1)
+
+
 ```
 
 ## Методы

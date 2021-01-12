@@ -5,11 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 twine = "*"
+aiounittest = "*"
 
 [packages]
 requests = "*"
 pydantic = "*"
-
+aiohttp = "*"
 
 [requires]
 python_version = "3.7"

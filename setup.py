@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setuptools.setup(
     name="dev_up",
-    version="1.1.0",
+    version="1.2.0",
     author="lordralinc",
     description="DEV UP API wrapper",
     long_description=long_description,
@@ -25,6 +25,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3.9",
         "Operating System :: OS Independent",
     ],
-    install_requires=["requests", "pydantic"],
+    install_requires=["requests", "pydantic", "aiohttp"],
     include_package_data=True,
 )
