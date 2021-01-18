@@ -110,3 +110,26 @@ class SpeechResponse(BaseModel):
 
 class AudioSpeechResponse(BaseModel):
     response: SpeechResponse
+
+
+#
+# utils.md5Generate
+#
+
+class MD5GenerateResponse(BaseModel):
+    date: str
+
+
+class UtilsMD5GenerateResponse(BaseModel):
+    response: MD5GenerateResponse
+
+
+#
+# utils.getServerTime
+#
+class GetServerTimeResponse(BaseModel):
+    date: int
+
+
+class UtilsGetServerTimeResponse(BaseModel):
+    response: GetServerTimeResponse

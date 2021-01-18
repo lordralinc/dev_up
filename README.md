@@ -28,6 +28,12 @@ from dev_up import DevUpAPI
 api = DevUpAPI("token")
 profile = api.profile.get()
 stickers = api.vk.get_stickers(1)
+
+custom = api.make_request(
+    "section.method", 
+    data=dict(param1="foo", param2="bar"), 
+    dataclass=dict
+)
 ```
 
 ```python
@@ -38,15 +44,21 @@ api = DevUpAPI("token")
 profile = await api.profile.get_async()
 stickers = await api.vk.get_stickers_async(1)
 
-
+custom = await api.make_request_async(
+    "section.method", 
+    data=dict(param1="foo", param2="bar"), 
+    dataclass=dict
+)
 ```
 
 ## Методы
 
-| Секция  | Метод        | Параметры                    | Описание                                |
-|---------|--------------|------------------------------|-----------------------------------------|
-| vk      | get_stickers | user_id - VK ID пользователя | Получает список стикеров пользователя   |
-| vk      | get_groups   | user_id - VK ID пользователя | Получает список групп пользователя      |
-| vk      | get_apps     | user_id - VK ID пользователя | Получает список приложений пользователя |
-| profile | get          |                              | Получает информацию о профиле           |
-| audio   | speech       | url - ссылка на mp3          | Преобразование аудио в текст            |
+| Секция  | Метод           | Параметры                    | Описание                                              |
+|---------|-----------------|------------------------------|-------------------------------------------------------|
+| vk      | get_stickers    | user_id - VK ID пользователя | Получает список стикеров пользователя                 |
+| vk      | get_groups      | user_id - VK ID пользователя | Получает список групп пользователя                    |
+| vk      | get_apps        | user_id - VK ID пользователя | Получает список приложений пользователя               |
+| profile | get             |                              | Получает информацию о профиле                         |
+| audio   | speech          | url - ссылка на mp3          | Преобразование аудио в текст                          |
+| utils   | md5_generate    | text - текст                 | Получить хэш md5 из текста                            |
+| utils   | get_server_time |                              | Возвращает текущее время на сервере в unixtime (МСК)  |

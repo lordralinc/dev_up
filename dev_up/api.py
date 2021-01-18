@@ -1,6 +1,9 @@
+from typing import Union, Type, TypeVar
+
 import requests
 import asyncio
 import aiohttp
+from pydantic import BaseModel
 
 from dev_up.abc import DevUpAPIABC
 from dev_up.categories import APICategories
@@ -9,6 +12,8 @@ from dev_up.exceptions import DevUpException
 import logging
 
 logger = logging.getLogger(__name__)
+
+T = TypeVar('T', dict, BaseModel)
 
 
 class DevUpAPI(DevUpAPIABC, APICategories):
@@ -25,7 +30,14 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         self._token = token
         self._loop = loop
 
-    def make_request(self, method: str, data=None) -> dict:
+    def make_request(self, method: str, data=None, dataclass: Type[T] = dict) -> T:
+        """Выполняет запрос к серверу DEV-UP
+
+        :param method: Название метода
+        :param data: Параметры
+        :param dataclass: Датакласс, который влияет на тип выходного значения
+        :return: Результат запроса
+        """
         if data is None:
             data = dict()
         data.update(key=self._token)
@@ -35,13 +47,20 @@ class DevUpAPI(DevUpAPIABC, APICategories):
 
         if 'err' in response:
             raise DevUpException(
-                params=response['params'],
+                params=response.get('params', []),
                 **response['err']
             )
 
-        return response
+        return dataclass(**response)
 
-    async def make_request_async(self, method: str, data=None) -> dict:
+    async def make_request_async(self, method: str, data=None, dataclass: Type[T] = dict) -> T:
+        """Выполняет запрос к серверу DEV-UP (асинхронно)
+
+        :param method: Название метода
+        :param data: Параметры
+        :param dataclass: Датакласс, который влияет на тип выходного значения
+        :return: Результат запроса
+        """
         if data is None:
             data = dict()
         data.update(key=self._token)
@@ -52,10 +71,10 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                 logger.debug(f"Response: {response_json}")
                 if 'err' in response_json:
                     raise DevUpException(
-                        params=response_json['params'],
+                        params=response_json.get('params'),
                         **response_json['err']
                     )
-                return response_json
+                return dataclass(**response_json)
 
     @property
     def loop(self) -> asyncio.AbstractEventLoop:

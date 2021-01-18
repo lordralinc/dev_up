@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setuptools.setup(
     name="dev_up",
-    version="1.2.0",
+    version="1.3.0",
     author="lordralinc",
     description="DEV UP API wrapper",
     long_description=long_description,
