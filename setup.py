@@ -1,5 +1,8 @@
 import setuptools
 
+
+
+
 try:
     with open("README.md", "r", encoding="utf-8") as f:
         long_description = f.read()
@@ -11,7 +14,7 @@ except FileNotFoundError:
 
 setuptools.setup(
     name="dev_up",
-    version="1.3.0",
+    version="1.4.0",
     author="lordralinc",
     description="DEV UP API wrapper",
     long_description=long_description,

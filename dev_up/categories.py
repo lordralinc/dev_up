@@ -1,13 +1,17 @@
 from abc import abstractmethod
-from typing import TYPE_CHECKING
-
+from typing import TYPE_CHECKING, Union
 from dev_up.abc import APICategoriesABC, BaseAPICategoriesABC
 from dev_up.models import (
     VkGetStickersResponse,
     VkGetGroupsResponse,
     VkGetAppsResponse,
     ProfileGetResponse,
-    AudioSpeechResponse, UtilsMD5GenerateResponse, UtilsGetServerTimeResponse
+    AudioSpeechResponse,
+    UtilsMD5GenerateResponse,
+    UtilsGetServerTimeResponse,
+    UtilsGetShortLinkResponse,
+    LinkStatus,
+    UtilsNotificationsLinksResponse
 )
 
 if TYPE_CHECKING:
@@ -110,6 +114,22 @@ class UtilsAPICategories(BaseAPICategories):
         """Возвращает текущее время на сервере в unixtime (МСК)"""
         return self.api.make_request("utils.getServerTime", dataclass=UtilsGetServerTimeResponse)
 
+    def get_short_link(self, url: str) -> UtilsGetShortLinkResponse:
+        """Сокращение ссылок"""
+        return self.api.make_request(
+            "utils.getShortLink",
+            data=dict(url=url),
+            dataclass=UtilsGetShortLinkResponse
+        )
+
+    def notifications_links(self, code: str, status: Union[int, LinkStatus]) -> UtilsNotificationsLinksResponse:
+        """Управление уведомлениями от ссылок"""
+        return self.api.make_request(
+            "utils.notificationsLinks",
+            data=dict(code=code, status=LinkStatus(status).value),
+            dataclass=UtilsNotificationsLinksResponse
+        )
+
     async def md5_generate_async(self, text: str) -> UtilsMD5GenerateResponse:
         """Получить хэш md5 из текста
 
@@ -124,6 +144,26 @@ class UtilsAPICategories(BaseAPICategories):
     async def get_server_time_async(self) -> UtilsGetServerTimeResponse:
         """Возвращает текущее время на сервере в unixtime (МСК)"""
         return await self.api.make_request_async("utils.getServerTime", dataclass=UtilsGetServerTimeResponse)
+
+    async def get_short_link_async(self, url: str) -> UtilsGetShortLinkResponse:
+        """Сокращение ссылок"""
+        return await self.api.make_request_async(
+            "utils.getShortLink",
+            data=dict(url=url),
+            dataclass=UtilsGetShortLinkResponse
+        )
+
+    async def notifications_links_async(
+            self,
+            code: str,
+            status: Union[int, LinkStatus]
+    ) -> UtilsNotificationsLinksResponse:
+        """Управление уведомлениями от ссылок"""
+        return await self.api.make_request_async(
+            "utils.notificationsLinks",
+            data=dict(code=code, status=LinkStatus(status).value),
+            dataclass=UtilsNotificationsLinksResponse
+        )
 
 
 class APICategories(APICategoriesABC):
