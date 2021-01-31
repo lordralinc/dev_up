@@ -9,9 +9,12 @@ from dev_up.abc import DevUpAPIABC
 from dev_up.categories import APICategories
 from dev_up.exceptions import DevUpException
 
-import logging
 
-logger = logging.getLogger(__name__)
+try:
+    from loguru import logger
+except ImportError:
+    import logging
+    logger = logging.getLogger(__name__)
 
 T = TypeVar('T', dict, BaseModel)
 
@@ -43,7 +46,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         data.update(key=self._token)
         logger.debug(f"Make post request to https://api.dev-up.ru/method/{method} with data {data}")
         response = requests.post(f"https://api.dev-up.ru/method/{method}", data=data).json()
-        logger.debug(f"Response: {response}")
+        logger.debug(f"Response: {response}. Use dataclass {dataclass.__name__}.")
 
         if 'err' in response:
             raise DevUpException(
@@ -68,7 +71,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         async with aiohttp.ClientSession() as session:
             async with session.post(f"https://api.dev-up.ru/method/{method}", data=data) as response:
                 response_json = await response.json()
-                logger.debug(f"Response: {response_json}")
+                logger.debug(f"Response: {response_json}. Use dataclass {dataclass.__name__}.")
                 if 'err' in response_json:
                     raise DevUpException(
                         params=response_json.get('params'),

@@ -1,18 +1,7 @@
 from abc import abstractmethod
 from typing import TYPE_CHECKING, Union
 from dev_up.abc import APICategoriesABC, BaseAPICategoriesABC
-from dev_up.models import (
-    VkGetStickersResponse,
-    VkGetGroupsResponse,
-    VkGetAppsResponse,
-    ProfileGetResponse,
-    AudioSpeechResponse,
-    UtilsMD5GenerateResponse,
-    UtilsGetServerTimeResponse,
-    UtilsGetShortLinkResponse,
-    LinkStatus,
-    UtilsNotificationsLinksResponse
-)
+from dev_up import models
 
 if TYPE_CHECKING:
     from dev_up.api import DevUpAPI
@@ -26,143 +15,195 @@ class BaseAPICategories(BaseAPICategoriesABC):
 
 class VkAPICategories(BaseAPICategories):
 
-    def get_stickers(self, user_id: int) -> VkGetStickersResponse:
+    def get_stickers(self, user_id: int) -> models.VkGetStickers:
         """Получает список стикеров пользователя
 
         :param user_id: VK ID пользователя
         """
-        return self.api.make_request('vk.getStickers', dict(user_id=user_id), dataclass=VkGetStickersResponse)
+        return self.api.make_request(
+            method='vk.getStickers',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetStickers
+        )
 
-    def get_groups(self, user_id: int) -> VkGetGroupsResponse:
+    def get_groups(self, user_id: int) -> models.VkGetGroups:
         """Получает список групп пользователя
 
         :param user_id: VK ID пользователя
         """
-        return self.api.make_request('vk.getGroups', dict(user_id=user_id), dataclass=VkGetGroupsResponse)
+        return self.api.make_request(
+            method='vk.getGroups',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetGroups
+        )
 
-    def get_apps(self, user_id: int) -> VkGetAppsResponse:
+    def get_apps(self, user_id: int) -> models.VkGetApps:
         """Получает список приложений пользователя
 
         :param user_id: VK ID пользователя
         """
-        return self.api.make_request('vk.getApps', dict(user_id=user_id), dataclass=VkGetAppsResponse)
+        return self.api.make_request(
+            method='vk.getApps',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetApps
+        )
 
-    async def get_stickers_async(self, user_id: int) -> VkGetStickersResponse:
+    async def get_stickers_async(self, user_id: int) -> models.VkGetStickers:
         """Получает список стикеров пользователя
 
         :param user_id: VK ID пользователя
         """
         return await self.api.make_request_async(
-            'vk.getStickers',
-            dict(user_id=user_id),
-            dataclass=VkGetStickersResponse
+            method='vk.getStickers',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetStickers
         )
 
-    async def get_groups_async(self, user_id: int) -> VkGetGroupsResponse:
+    async def get_groups_async(self, user_id: int) -> models.VkGetGroups:
         """Получает список групп пользователя
 
         :param user_id: VK ID пользователя
         """
-        return await self.api.make_request_async('vk.getGroups', dict(user_id=user_id), dataclass=VkGetGroupsResponse)
+        return await self.api.make_request_async(
+            method='vk.getGroups',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetGroups
+        )
 
-    async def get_apps_async(self, user_id: int) -> VkGetAppsResponse:
+    async def get_apps_async(self, user_id: int) -> models.VkGetApps:
         """Получает список приложений пользователя
 
         :param user_id: VK ID пользователя
         """
-        return await self.api.make_request_async('vk.getApps', dict(user_id=user_id), dataclass=VkGetAppsResponse)
+        return await self.api.make_request_async(
+            method='vk.getApps',
+            data=dict(user_id=user_id),
+            dataclass=models.VkGetApps
+        )
 
 
 class ProfileAPICategories(BaseAPICategories):
 
-    def get(self):
+    def get(self) -> models.ProfileGet:
         """Получает информацию о профиле DEV-UP"""
-        return self.api.make_request('profile.get', dataclass=ProfileGetResponse)
+        return self.api.make_request(
+            method='profile.get',
+            data=dict(),
+            dataclass=models.ProfileGet
+        )
 
-    async def get_async(self):
+    async def get_async(self) -> models.ProfileGet:
         """Получает информацию о профиле DEV-UP"""
-        return await self.api.make_request_async('profile.get', dataclass=ProfileGetResponse)
+        return await self.api.make_request_async(
+            method='profile.get',
+            data=dict(),
+            dataclass=models.ProfileGet
+        )
 
 
 class AudioAPICategories(BaseAPICategories):
 
-    def speech(self, url: str) -> AudioSpeechResponse:
+    def speech(self, url: str) -> models.AudioSpeech:
         """Преобразование аудио в текст
 
         :param url: ссылка на mp3
         """
-        return self.api.make_request('audio.speech', dict(url=url), dataclass=AudioSpeechResponse)
+        return self.api.make_request(
+            method='audio.speech',
+            data=dict(url=url),
+            dataclass=models.AudioSpeech
+        )
 
-    async def speech_async(self, url: str) -> AudioSpeechResponse:
+    async def speech_async(self, url: str) -> models.AudioSpeech:
         """Преобразование аудио в текст
 
         :param url: ссылка на mp3
         """
-        return await self.api.make_request_async('audio.speech', dict(url=url), dataclass=AudioSpeechResponse)
+        return await self.api.make_request_async(
+            method='audio.speech',
+            data=dict(url=url),
+            dataclass=models.AudioSpeech
+        )
 
 
 class UtilsAPICategories(BaseAPICategories):
 
-    def md5_generate(self, text: str) -> UtilsMD5GenerateResponse:
+    def md5_generate(self, text: str) -> models.UtilsMD5Generate:
         """Получить хэш md5 из текста
 
         :param text: текст
         """
-        return self.api.make_request('utils.md5Generate', dict(text=text), dataclass=UtilsMD5GenerateResponse)
-
-    def get_server_time(self) -> UtilsGetServerTimeResponse:
-        """Возвращает текущее время на сервере в unixtime (МСК)"""
-        return self.api.make_request("utils.getServerTime", dataclass=UtilsGetServerTimeResponse)
-
-    def get_short_link(self, url: str) -> UtilsGetShortLinkResponse:
-        """Сокращение ссылок"""
         return self.api.make_request(
-            "utils.getShortLink",
-            data=dict(url=url),
-            dataclass=UtilsGetShortLinkResponse
+            method='utils.md5Generate',
+            data=dict(text=text),
+            dataclass=models.UtilsMD5Generate
         )
 
-    def notifications_links(self, code: str, status: Union[int, LinkStatus]) -> UtilsNotificationsLinksResponse:
+    def get_server_time(self) -> models.UtilsGetServerTime:
+        """Возвращает текущее время на сервере в unixtime (МСК)"""
+        return self.api.make_request(
+             method="utils.getServerTime",
+             data=dict(),
+             dataclass=models.UtilsGetServerTime
+        )
+
+    def get_short_link(self, url: str) -> models.UtilsGetShortLink:
+        """Сокращение ссылок"""
+        return self.api.make_request(
+            method="utils.getShortLink",
+            data=dict(url=url),
+            dataclass=models.UtilsGetShortLink
+        )
+
+    def notifications_links(
+            self,
+            code: str,
+            status: Union[int, models.NotificationsLinksStatus]
+    ) -> models.UtilsNotificationsLinks:
         """Управление уведомлениями от ссылок"""
         return self.api.make_request(
-            "utils.notificationsLinks",
-            data=dict(code=code, status=LinkStatus(status).value),
-            dataclass=UtilsNotificationsLinksResponse
+            method="utils.notificationsLinks",
+            data=dict(code=code, status=models.NotificationsLinksStatus(status).value),
+            dataclass=models.UtilsNotificationsLinks
         )
 
-    async def md5_generate_async(self, text: str) -> UtilsMD5GenerateResponse:
+    async def md5_generate_async(self, text: str) -> models.UtilsMD5Generate:
         """Получить хэш md5 из текста
 
         :param text: текст
         """
         return await self.api.make_request_async(
-            'utils.md5Generate',
-            dict(text=text),
-            dataclass=UtilsMD5GenerateResponse
+            method='utils.md5Generate',
+            data=dict(text=text),
+            dataclass=models.UtilsMD5Generate
         )
 
-    async def get_server_time_async(self) -> UtilsGetServerTimeResponse:
+    async def get_server_time_async(self) -> models.UtilsGetServerTime:
         """Возвращает текущее время на сервере в unixtime (МСК)"""
-        return await self.api.make_request_async("utils.getServerTime", dataclass=UtilsGetServerTimeResponse)
+        return await self.api.make_request_async(
+            method="utils.getServerTime",
+            data=dict(),
+            dataclass=models.UtilsGetServerTime
+        )
 
-    async def get_short_link_async(self, url: str) -> UtilsGetShortLinkResponse:
+    async def get_short_link_async(self, url: str) -> models.UtilsGetShortLink:
         """Сокращение ссылок"""
         return await self.api.make_request_async(
-            "utils.getShortLink",
+            method="utils.getShortLink",
             data=dict(url=url),
-            dataclass=UtilsGetShortLinkResponse
+            dataclass=models.UtilsGetShortLink
         )
 
     async def notifications_links_async(
             self,
             code: str,
-            status: Union[int, LinkStatus]
-    ) -> UtilsNotificationsLinksResponse:
+            status: Union[int, models.NotificationsLinksStatus]
+    ) -> models.UtilsNotificationsLinks:
         """Управление уведомлениями от ссылок"""
         return await self.api.make_request_async(
-            "utils.notificationsLinks",
-            data=dict(code=code, status=LinkStatus(status).value),
-            dataclass=UtilsNotificationsLinksResponse
+            method="utils.notificationsLinks",
+            data=dict(code=code, status=models.NotificationsLinksStatus(status).value),
+            dataclass=models.UtilsNotificationsLinks
         )
 
 
