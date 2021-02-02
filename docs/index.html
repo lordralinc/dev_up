@@ -13,22 +13,7 @@
     </style>
   </head>
   <body>
-    <div id="swagger-ui"></div>
-    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
-    <script>
-      const ui = SwaggerUIBundle({
-          url: "https://raw.githubusercontent.com/lordralinc/dev_up/master/openapi.json",
-      oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
-          dom_id: '#swagger-ui',
-          presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIBundle.SwaggerUIStandalonePreset
-          ],
-          layout: "BaseLayout",
-          deepLinking: true,
-          showExtensions: true,
-          showCommonExtensions: true
-      })
-    </script>
+    <redoc spec-url="https://raw.githubusercontent.com/lordralinc/dev_up/master/docs/openapi.json"></redoc>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
   </body>
 </html>
