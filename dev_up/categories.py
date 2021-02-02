@@ -26,6 +26,17 @@ class VkAPICategories(BaseAPICategories):
             dataclass=models.VkGetStickers
         )
 
+    def get_sticker_info(self, sticker_id: int) -> models.VkGetStickerInfo:
+        """Получает информацию о стикере и стикер-паке
+
+        :param sticker_id: ID стикера
+        """
+        return self.api.make_request(
+            method='vk.getStickerInfo',
+            data=dict(sticker_id=sticker_id),
+            dataclass=models.VkGetStickerInfo
+        )
+
     def get_groups(self, user_id: int) -> models.VkGetGroups:
         """Получает список групп пользователя
 
@@ -57,6 +68,17 @@ class VkAPICategories(BaseAPICategories):
             method='vk.getStickers',
             data=dict(user_id=user_id),
             dataclass=models.VkGetStickers
+        )
+
+    async def get_sticker_info_async(self, sticker_id: int) -> models.VkGetStickerInfo:
+        """Получает информацию о стикере и стикер-паке
+
+        :param sticker_id: ID стикера
+        """
+        return await self.api.make_request_async(
+            method='vk.getStickerInfo',
+            data=dict(sticker_id=sticker_id),
+            dataclass=models.VkGetStickerInfo
         )
 
     async def get_groups_async(self, user_id: int) -> models.VkGetGroups:
