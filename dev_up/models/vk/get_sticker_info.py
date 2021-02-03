@@ -52,10 +52,10 @@ class VkGetStickerInfoResponseSticker(BaseModel):
 class VkGetStickerInfoResponsePack(BaseModel):
     id: int
     title: str
-    stickers_count: int
+    stickers_count: Optional[int] = 0
     price: Optional[VkGetStickerInfoResponsePackPrice]
-    author: str
-    description: str
+    author: Optional[str] = "Только с премиум доступом"
+    description: Optional[str] = "Только с премиум доступом"
 
 
 class VkGetStickerInfoResponse(BaseModel):
