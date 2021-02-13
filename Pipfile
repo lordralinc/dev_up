@@ -11,6 +11,7 @@ aiounittest = "*"
 requests = "*"
 pydantic = "*"
 aiohttp = "*"
+attrdict = "*"
 
 [requires]
 python_version = "3.7"

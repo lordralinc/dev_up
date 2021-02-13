@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 __all__ = (
     'ShortLink',
-    'UtilsGetShortLinkResponse',
-    'UtilsGetShortLink',
+    'UtilsCreateShortLinkResponse',
+    'UtilsCreateShortLink',
 )
 
 
@@ -14,7 +14,7 @@ class ShortLink(BaseModel):
     code: str
 
 
-class UtilsGetShortLinkResponse(BaseModel):
+class UtilsCreateShortLinkResponse(BaseModel):
     id: int
     create_vk: int
     original_url: str
@@ -27,5 +27,5 @@ class UtilsGetShortLinkResponse(BaseModel):
         return datetime.fromtimestamp(self.create_date / 1000)
 
 
-class UtilsGetShortLink(BaseModel):
-    response: UtilsGetShortLinkResponse
+class UtilsCreateShortLink(BaseModel):
+    response: UtilsCreateShortLinkResponse

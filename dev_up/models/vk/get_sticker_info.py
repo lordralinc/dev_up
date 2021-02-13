@@ -61,6 +61,7 @@ class VkGetStickerInfoResponsePack(BaseModel):
 class VkGetStickerInfoResponse(BaseModel):
     sticker: VkGetStickerInfoResponseSticker
     pack: VkGetStickerInfoResponsePack
+    system_comment: Optional[str] = None
 
 
 class VkGetStickerInfo(BaseModel):

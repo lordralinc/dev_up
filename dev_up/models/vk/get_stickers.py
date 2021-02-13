@@ -32,6 +32,7 @@ class VkGetStickersResponse(BaseModel):
     count: int
     stickers: List[Sticker]
     price: Optional[StickersPrice] = None
+    system_comment: Optional[str] = None
 
 
 class VkGetStickers(BaseModel):

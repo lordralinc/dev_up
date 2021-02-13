@@ -3,20 +3,21 @@ from typing import Union, Type, TypeVar
 import requests
 import asyncio
 import aiohttp
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
+from attrdict import AttrDict
 
 from dev_up.abc import DevUpAPIABC
 from dev_up.categories import APICategories
 from dev_up.exceptions import DevUpException
 
-
 try:
     from loguru import logger
 except ImportError:
     import logging
+
     logger = logging.getLogger(__name__)
 
-T = TypeVar('T', dict, BaseModel)
+T = TypeVar('T', dict, AttrDict, BaseModel)
 
 
 class DevUpAPI(DevUpAPIABC, APICategories):
@@ -28,12 +29,14 @@ class DevUpAPI(DevUpAPIABC, APICategories):
     def __init__(
             self,
             token: str,
-            loop: asyncio.AbstractEventLoop = None
+            loop: asyncio.AbstractEventLoop = None,
+            pass_return_response: bool = False
     ):
+        self.pass_return_response = pass_return_response
         self._token = token
         self._loop = loop
 
-    def make_request(self, method: str, data=None, dataclass: Type[T] = dict) -> T:
+    def make_request(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
         """Выполняет запрос к серверу DEV-UP
 
         :param method: Название метода
@@ -53,10 +56,15 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                 params=response.get('params', []),
                 **response['err']
             )
+        try:
+            data = dataclass(**response)
+            logger.debug("Response validated")
+            return data
+        except ValidationError as ex:
+            logger.exception(ex)
+            return AttrDict(response)
 
-        return dataclass(**response)
-
-    async def make_request_async(self, method: str, data=None, dataclass: Type[T] = dict) -> T:
+    async def make_request_async(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
         """Выполняет запрос к серверу DEV-UP (асинхронно)
 
         :param method: Название метода
@@ -77,7 +85,13 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                         params=response_json.get('params'),
                         **response_json['err']
                     )
-                return dataclass(**response_json)
+                try:
+                    data = dataclass(**response_json)
+                    logger.debug("Response validated")
+                    return data
+                except ValidationError as ex:
+                    logger.exception(ex)
+                    return AttrDict(response_json)
 
     @property
     def loop(self) -> asyncio.AbstractEventLoop:

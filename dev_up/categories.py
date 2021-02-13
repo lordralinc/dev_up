@@ -169,12 +169,12 @@ class UtilsAPICategories(BaseAPICategories):
              dataclass=models.UtilsGetServerTime
         )
 
-    def get_short_link(self, url: str) -> models.UtilsGetShortLink:
+    def create_short_link(self, url: str) -> models.UtilsCreateShortLink:
         """Сокращение ссылок"""
         return self.api.make_request(
-            method="utils.getShortLink",
+            method="utils.createShortLink",
             data=dict(url=url),
-            dataclass=models.UtilsGetShortLink
+            dataclass=models.UtilsCreateShortLink
         )
 
     def notifications_links(
@@ -208,12 +208,12 @@ class UtilsAPICategories(BaseAPICategories):
             dataclass=models.UtilsGetServerTime
         )
 
-    async def get_short_link_async(self, url: str) -> models.UtilsGetShortLink:
+    async def create_short_link_async(self, url: str) -> models.UtilsCreateShortLink:
         """Сокращение ссылок"""
         return await self.api.make_request_async(
-            method="utils.getShortLink",
+            method="utils.createShortLink",
             data=dict(url=url),
-            dataclass=models.UtilsGetShortLink
+            dataclass=models.UtilsCreateShortLink
         )
 
     async def notifications_links_async(
