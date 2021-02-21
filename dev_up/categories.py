@@ -164,9 +164,9 @@ class UtilsAPICategories(BaseAPICategories):
     def get_server_time(self) -> models.UtilsGetServerTime:
         """Возвращает текущее время на сервере в unixtime (МСК)"""
         return self.api.make_request(
-             method="utils.getServerTime",
-             data=dict(),
-             dataclass=models.UtilsGetServerTime
+            method="utils.getServerTime",
+            data=dict(),
+            dataclass=models.UtilsGetServerTime
         )
 
     def create_short_link(self, url: str) -> models.UtilsCreateShortLink:
@@ -187,6 +187,14 @@ class UtilsAPICategories(BaseAPICategories):
             method="utils.notificationsLinks",
             data=dict(code=code, status=models.NotificationsLinksStatus(status).value),
             dataclass=models.UtilsNotificationsLinks
+        )
+
+    def get_web_info(self, address: str) -> models.UtilsGetWebInfo:
+        """Информация о сервере"""
+        return self.api.make_request(
+            method="utils.getWebInfo",
+            data=dict(address=address),
+            dataclass=models.UtilsGetWebInfo
         )
 
     async def md5_generate_async(self, text: str) -> models.UtilsMD5Generate:
@@ -226,6 +234,14 @@ class UtilsAPICategories(BaseAPICategories):
             method="utils.notificationsLinks",
             data=dict(code=code, status=models.NotificationsLinksStatus(status).value),
             dataclass=models.UtilsNotificationsLinks
+        )
+
+    async def get_web_info_async(self, address: str) -> models.UtilsGetWebInfo:
+        """Информация о сервере"""
+        return await self.api.make_request_async(
+            method="utils.getWebInfo",
+            data=dict(address=address),
+            dataclass=models.UtilsGetWebInfo
         )
 
 

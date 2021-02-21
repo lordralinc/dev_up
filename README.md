@@ -65,3 +65,4 @@ custom = await api.make_request_async(
 | utils   | get_server_time     |                                               | Возвращает текущее время на сервере в unixtime (МСК). |
 | utils   | get_short_link      | url - ссылка                                  | Сокращение ссылок                                     |
 | utils   | notifications_links | code - код ссылки status - статус уведомлений | Управление уведомлениями от ссылок                    |
+| utils   | get_web_info        | address - IP или URL                          | Информация о сервере                                  |
