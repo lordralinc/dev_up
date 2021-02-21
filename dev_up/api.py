@@ -30,11 +30,14 @@ class DevUpAPI(DevUpAPIABC, APICategories):
             self,
             token: str,
             loop: asyncio.AbstractEventLoop = None,
-            pass_return_response: bool = False
+            pass_return_response: bool = False,
+            timeout: float = 30,
     ):
         self.pass_return_response = pass_return_response
         self._token = token
         self._loop = loop
+
+        self.timeout = timeout
 
     def make_request(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
         """Выполняет запрос к серверу DEV-UP
@@ -47,8 +50,10 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         if data is None:
             data = dict()
         data.update(key=self._token)
-        logger.debug(f"Make post request to https://api.dev-up.ru/method/{method} with data {data}")
-        response = requests.post(f"https://api.dev-up.ru/method/{method}", data=data).json()
+        logger.debug(
+            f"Make post request to https://api.dev-up.ru/method/{method} with data {data}. Timeout {self.timeout}"
+        )
+        response = requests.post(f"https://api.dev-up.ru/method/{method}", data=data, timeout=self.timeout).json()
         logger.debug(f"Response: {response}. Use dataclass {dataclass.__name__}.")
 
         if 'err' in response:
@@ -75,8 +80,10 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         if data is None:
             data = dict()
         data.update(key=self._token)
-        logger.debug(f"Make async post request to https://api.dev-up.ru/method/{method} with data {data}")
-        async with aiohttp.ClientSession() as session:
+        logger.debug(
+            f"Make async post request to https://api.dev-up.ru/method/{method} with data {data}. Timeout {self.timeout}"
+        )
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout)) as session:
             async with session.post(f"https://api.dev-up.ru/method/{method}", data=data) as response:
                 response_json = await response.json()
                 logger.debug(f"Response: {response_json}. Use dataclass {dataclass.__name__}.")
