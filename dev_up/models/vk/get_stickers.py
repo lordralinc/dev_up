@@ -30,6 +30,7 @@ class Sticker(BaseModel):
 class VkGetStickersResponse(BaseModel):
     user_id: int
     count: int
+    count_all: int
     stickers: List[Sticker]
     price: Optional[StickersPrice] = None
     system_comment: Optional[str] = None
