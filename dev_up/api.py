@@ -57,10 +57,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         logger.debug(f"Response: {response}. Use dataclass {dataclass.__name__}.")
 
         if 'err' in response:
-            raise DevUpException(
-                params=response.get('params', []),
-                **response['err']
-            )
+            raise DevUpException(**response['err'])
         try:
             data = dataclass(**response)
             logger.debug("Response validated")
@@ -88,10 +85,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                 response_json = await response.json()
                 logger.debug(f"Response: {response_json}. Use dataclass {dataclass.__name__}.")
                 if 'err' in response_json:
-                    raise DevUpException(
-                        params=response_json.get('params'),
-                        **response_json['err']
-                    )
+                    raise DevUpException(**response_json['err'])
                 try:
                     data = dataclass(**response_json)
                     logger.debug("Response validated")
