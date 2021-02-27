@@ -114,12 +114,44 @@ class ProfileAPICategories(BaseAPICategories):
             dataclass=models.ProfileGet
         )
 
+    def balance_buy_premium(self) -> models.ProfileBalanceBuyPremium:
+        """Получение premium статуса"""
+        return self.api.make_request(
+            method='profile.balanceBuyPremium',
+            data=dict(),
+            dataclass=models.ProfileBalanceBuyPremium
+        )
+
+    def limit_buy(self, amount: int) -> models.ProfileLimitBuy:
+        """Покупка лимита"""
+        return self.api.make_request(
+            method='profile.LimitBuy',
+            data=dict(amount=amount),
+            dataclass=models.ProfileLimitBuy
+        )
+
     async def get_async(self) -> models.ProfileGet:
         """Получает информацию о профиле DEV-UP"""
         return await self.api.make_request_async(
             method='profile.get',
             data=dict(),
             dataclass=models.ProfileGet
+        )
+
+    async def balance_buy_premium_async(self) -> models.ProfileBalanceBuyPremium:
+        """Получение premium статуса"""
+        return await self.api.make_request_async(
+            method='profile.balanceBuyPremium',
+            data=dict(),
+            dataclass=models.ProfileBalanceBuyPremium
+        )
+
+    async def limit_buy_async(self, amount: int) -> models.ProfileLimitBuy:
+        """Покупка лимита"""
+        return await self.api.make_request_async(
+            method='profile.LimitBuy',
+            data=dict(amount=amount),
+            dataclass=models.ProfileLimitBuy
         )
 
 

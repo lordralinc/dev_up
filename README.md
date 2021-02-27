@@ -60,6 +60,8 @@ custom = await api.make_request_async(
 | vk      | get_groups          | user_id - VK ID пользователя                  | Получает список групп пользователя                    |
 | vk      | get_apps            | user_id - VK ID пользователя                  | Получает список приложений пользователя               |
 | profile | get                 |                                               | Получает информацию о профиле                         |
+| profile | balance_buy_premium |                                               | Получение premium статуса                             |
+| profile | limit_buy           | amount - количество запросов                  | Покупка лимита                                        |
 | audio   | speech              | url - ссылка на mp3                           | Преобразование аудио в текст                          |
 | utils   | md5_generate        | text - текст                                  | Получить хэш md5 из текста                            |
 | utils   | get_server_time     |                                               | Возвращает текущее время на сервере в unixtime (МСК). |
