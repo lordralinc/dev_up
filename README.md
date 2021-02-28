@@ -37,6 +37,21 @@ custom = api.make_request(
 ```
 
 ```python
+# Использование с динамическим ключом доступа
+from dev_up import DevUpAPI
+
+api = DevUpAPI()
+profile = await api.profile.get_async(key='token')
+stickers = await api.vk.get_stickers_async(1, key='token')
+
+custom = api.make_request(
+    "section.method", 
+    data=dict(param1="foo", param2="bar", key='token'), 
+    dataclass=dict
+)
+```
+
+```python
 # Асинхронное использование
 from dev_up import DevUpAPI
 
