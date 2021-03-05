@@ -4,28 +4,36 @@ from dev_up.categories.base import BaseAPICategories
 
 class ProfileAPICategories(BaseAPICategories):
 
-    def get(self, key: str = None) -> models.ProfileGet:
+    def get(self, user_id: int = None, key: str = None) -> models.ProfileGet:
         """Получает информацию о профиле DEV-UP"""
         return self.api.make_request(
             method='profile.get',
-            data=dict(key=key),
+            data=dict(user_id=user_id, key=key),
             dataclass=models.ProfileGet
         )
 
-    def balance_buy_premium(self, key: str = None) -> models.ProfileBalanceBuyPremium:
+    def buy_premium(self, key: str = None) -> models.ProfileBuyPremium:
         """Получение premium статуса"""
         return self.api.make_request(
-            method='profile.balanceBuyPremium',
+            method='profile.buyPremium',
             data=dict(key=key),
-            dataclass=models.ProfileBalanceBuyPremium
+            dataclass=models.ProfileBuyPremium
         )
 
-    def limit_buy(self, amount: int, key: str = None) -> models.ProfileLimitBuy:
+    def buy_limit(self, amount: int, key: str = None) -> models.ProfileBuyLimit:
         """Покупка лимита"""
         return self.api.make_request(
-            method='profile.LimitBuy',
+            method='profile.buyLimit',
             data=dict(amount=amount, key=key),
-            dataclass=models.ProfileLimitBuy
+            dataclass=models.ProfileBuyLimit
+        )
+
+    def get_balance_link(self, amount: int, vk: int, key: str = None) -> models.ProfileGetBalanceLink:
+        """Получение ссылки на пополнение баланса"""
+        return self.api.make_request(
+            method='profile.getBalanceLink',
+            data=dict(amount=amount, vk=vk, key=key),
+            dataclass=models.ProfileGetBalanceLink
         )
 
     async def get_async(self, key: str = None) -> models.ProfileGet:
@@ -36,18 +44,26 @@ class ProfileAPICategories(BaseAPICategories):
             dataclass=models.ProfileGet
         )
 
-    async def balance_buy_premium_async(self, key: str = None) -> models.ProfileBalanceBuyPremium:
+    async def buy_premium_async(self, key: str = None) -> models.ProfileBuyPremium:
         """Получение premium статуса"""
         return await self.api.make_request_async(
-            method='profile.balanceBuyPremium',
+            method='profile.buyPremium',
             data=dict(key=key),
-            dataclass=models.ProfileBalanceBuyPremium
+            dataclass=models.ProfileBuyPremium
         )
 
-    async def limit_buy_async(self, amount: int, key: str = None) -> models.ProfileLimitBuy:
+    async def buy_limit_async(self, amount: int, key: str = None) -> models.ProfileBuyLimit:
         """Покупка лимита"""
         return await self.api.make_request_async(
-            method='profile.LimitBuy',
+            method='profile.buyLimit',
             data=dict(amount=amount, key=key),
-            dataclass=models.ProfileLimitBuy
+            dataclass=models.ProfileBuyLimit
+        )
+
+    async def get_balance_link_async(self, amount: int, vk: int, key: str = None) -> models.ProfileGetBalanceLink:
+        """Получение ссылки на пополнение баланса"""
+        return await self.api.make_request_async(
+            method='profile.getBalanceLink',
+            data=dict(amount=amount, vk=vk, key=key),
+            dataclass=models.ProfileGetBalanceLink
         )

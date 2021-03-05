@@ -1,12 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
-from datetime import datetime as dt
-
-__all__ = (
-    'UtilsGetWebInfoResponse',
-    'UtilsGetWebInfo',
-)
+from pydantic import BaseModel
 
 
 class UtilsGetWebInfoResponseIpInfoOrganization(BaseModel):

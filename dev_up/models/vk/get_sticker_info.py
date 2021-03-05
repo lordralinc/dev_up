@@ -2,18 +2,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-__all__ = (
-    'VkGetStickerInfoResponseStickerImage',
-    'VkGetStickerInfoResponseStickerHints',
-    'DiscountValues',
-    'Discount',
-    'VkGetStickerInfoResponsePackPrice',
-    'VkGetStickerInfoResponseSticker',
-    'VkGetStickerInfoResponsePack',
-    'VkGetStickerInfoResponse',
-    'VkGetStickerInfo',
-)
-
 
 class VkGetStickerInfoResponseStickerImage(BaseModel):
     url: str

@@ -2,13 +2,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-__all__ = (
-    'StickersPrice',
-    'Sticker',
-    'VkGetStickersResponse',
-    'VkGetStickers',
-)
-
 
 class StickersPrice(BaseModel):
     votes: int

@@ -1,10 +1,5 @@
 from pydantic import BaseModel
 
-__all__ = (
-    'AudioSpeechResponse',
-    'AudioSpeech',
-)
-
 
 class AudioSpeechResponse(BaseModel):
     url: str
@@ -13,4 +8,3 @@ class AudioSpeechResponse(BaseModel):
 
 class AudioSpeech(BaseModel):
     response: AudioSpeechResponse
-

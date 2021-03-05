@@ -1,10 +1,10 @@
-from typing import Union, Type, TypeVar, Dict
-
-import requests
 import asyncio
+from typing import Type, TypeVar, Dict
+
 import aiohttp
-from pydantic import BaseModel, ValidationError
+import requests
 from attrdict import AttrDict
+from pydantic import BaseModel, ValidationError
 
 from dev_up import const
 from dev_up.abc import DevUpAPIABC
@@ -34,14 +34,24 @@ class DevUpAPI(DevUpAPIABC, APICategories):
             token: str = None,
             loop: asyncio.AbstractEventLoop = None,
             raise_validation_error: bool = False,
-            pass_return_response: bool = False,
+            return_response: bool = False,
             timeout: float = 30,
     ):
-        self.pass_return_response = pass_return_response
+        self.return_response = return_response
         self._token = token
         self._loop = loop
         self.raise_validation_error = raise_validation_error
         self.timeout = timeout
+
+    def __repr__(self) -> str:
+        return (
+            f"<DevUpAPI("
+            f"return_response={self.return_response}, "
+            f"raise_validation_error={self.raise_validation_error}, "
+            f"timeout={self.timeout}, "
+            f"token={'static' if self._token else 'dynamic'}"
+            f")>"
+        )
 
     def make_request(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
         """Выполняет запрос к серверу DEV-UP
@@ -63,7 +73,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         response.raise_for_status()
         response_json = response.json()
         logger.debug(f"Response: {response_json}. Use dataclass {dataclass.__name__}.")
-        return self.validate(response_json, dataclass)
+        return self.validate_response(response_json, dataclass)
 
     async def make_request_async(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
         """Выполняет запрос к серверу DEV-UP (асинхронно)
@@ -86,9 +96,10 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                 response.raise_for_status()
                 response_json = await response.json()
                 logger.debug(f"Response: {response_json}.")
-                return self.validate(response_json, dataclass)
+                return self.validate_response(response_json, dataclass)
 
-    def validate(self, response: Dict, dataclass: Type[T]) -> T:
+
+    def validate_response(self, response: Dict, dataclass: Type[T]) -> T:
         if 'err' in response:
             raise DevUpException(**response['err'])
         try:

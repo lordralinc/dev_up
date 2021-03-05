@@ -4,12 +4,6 @@ from pydantic import BaseModel
 
 from dev_up.models import Description
 
-__all__ = (
-    'Group',
-    'VkGetGroupsResponse',
-    'VkGetGroups',
-)
-
 
 class Group(BaseModel):
     id: int

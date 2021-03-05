@@ -1,13 +1,8 @@
 from typing import List, Optional
 
 from pydantic import BaseModel
-from dev_up.models import Description
 
-__all__ = (
-    'App',
-    'VkGetAppsResponse',
-    'VkGetApps',
-)
+from dev_up.models import Description
 
 
 class App(BaseModel):

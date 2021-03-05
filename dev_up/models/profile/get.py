@@ -1,16 +1,12 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
-
-__all__ = (
-    'ProfileGetResponseApi',
-    'ProfileGetResponse',
-    'ProfileGet',
-)
 
 
 class ProfileGetResponseApi(BaseModel):
     key: str
+    balance: float
     limit: int
     rate_limit: int
     warn: int
@@ -25,10 +21,10 @@ class ProfileGetResponse(BaseModel):
     verified: int
     premium: bool
     notifications: bool
-    last_ip: str
+    last_ip: Optional[str]
     last_online: int
     req_time: int
-    api: ProfileGetResponseApi
+    api: Optional[ProfileGetResponseApi]
 
     @property
     def last_online_datetime(self):
