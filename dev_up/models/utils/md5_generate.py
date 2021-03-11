@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class UtilsMD5GenerateResponse(BaseModel):
-    date: str
+    hash: str
 
 
 class UtilsMD5Generate(BaseModel):
