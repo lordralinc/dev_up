@@ -78,6 +78,7 @@ custom = await api.make_request_async(
 | profile | buy_premium         |                                                      | Получение premium статуса                             |
 | profile | buy_limit           | `amount` - количество запросов                       | Покупка лимита                                        |
 | profile | get_balance_link    | `amount` - сумма<br>`vk` - VK ID пользователя        | Получение ссылки на пополнение баланса                |
+| profile | set_key             |                                                      | Обнуление ключа доступа                               |
 | audio   | speech              | `url` - ссылка на mp3                                | Преобразование аудио в текст                          |
 | utils   | md5_generate        | `text` - текст                                       | Получить хэш md5 из текста                            |
 | utils   | get_server_time     |                                                      | Возвращает текущее время на сервере в unixtime (МСК). |

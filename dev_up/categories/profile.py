@@ -36,6 +36,14 @@ class ProfileAPICategories(BaseAPICategories):
             dataclass=models.ProfileGetBalanceLink
         )
 
+    def set_key(self) -> models.ProfileSetKey:
+        """Обнуление ключа доступа"""
+        return self.api.make_request(
+            method='profile.setKey',
+            data=dict(),
+            dataclass=models.ProfileSetKey
+        )
+
     async def get_async(self, key: str = None) -> models.ProfileGet:
         """Получает информацию о профиле DEV-UP"""
         return await self.api.make_request_async(
@@ -66,4 +74,12 @@ class ProfileAPICategories(BaseAPICategories):
             method='profile.getBalanceLink',
             data=dict(amount=amount, vk=vk, key=key),
             dataclass=models.ProfileGetBalanceLink
+        )
+
+    async def set_key_async(self) -> models.ProfileSetKey:
+        """Обнуление ключа доступа"""
+        return await self.api.make_request_async(
+            method='profile.setKey',
+            data=dict(),
+            dataclass=models.ProfileSetKey
         )
