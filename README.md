@@ -3,7 +3,7 @@
 ![PyPI](https://img.shields.io/pypi/v/dev-up)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dev-up)
 ![GitHub](https://img.shields.io/github/license/lordralinc/idm_lp)
-
+[![Downloads](https://pepy.tech/badge/dev-up)](https://pepy.tech/project/dev-up)
 ## Установка 
 ```shell
 pip install -U https://github.com/lordralinc/dev_up/archive/master.zip
