@@ -13,6 +13,11 @@ class ProfileGetResponseApi(BaseModel):
     used: int
 
 
+class ProfileGetResponseLP(BaseModel):
+    created: bool
+    status: bool
+
+
 class ProfileGetResponse(BaseModel):
     id: int
     id_vk: int
@@ -20,6 +25,11 @@ class ProfileGetResponse(BaseModel):
     last_name: str
     verified: int
     premium: bool
+    unlimited: bool
+    ban: bool
+    banip: bool
+    tester: bool
+    lp: ProfileGetResponseLP
     notifications: bool
     last_ip: Optional[str]
     last_online: int
