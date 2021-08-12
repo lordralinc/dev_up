@@ -57,6 +57,15 @@ class UtilsAPICategories(BaseAPICategories):
             dataclass=models.UtilsGetWebInfo
         )
 
+    def number_identifier(self, number: str, key: str = None, **kwargs) -> models.UtilsNumberIdentifier:
+        """Информация о номере телефона"""
+        return self.api.make_request(
+            method="utils.number_identifier",
+            data=dict(number=number, key=key, **kwargs),
+            dataclass=models.UtilsNumberIdentifier
+        )
+
+
     async def md5_generate_async(self, text: str, key: str = None, **kwargs) -> models.UtilsMD5Generate:
         """Получить хэш md5 из текста
 
@@ -106,4 +115,12 @@ class UtilsAPICategories(BaseAPICategories):
             method="utils.getWebInfo",
             data=dict(address=address, key=key, **kwargs),
             dataclass=models.UtilsGetWebInfo
+        )
+
+    async def number_identifier_async(self, number: str, key: str = None, **kwargs) -> models.UtilsNumberIdentifier:
+        """Информация о номере телефона"""
+        return await self.api.make_request_async(
+            method="utils.number_identifier",
+            data=dict(number=number, key=key, **kwargs),
+            dataclass=models.UtilsNumberIdentifier
         )
