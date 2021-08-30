@@ -74,6 +74,10 @@ custom = await api.make_request_async(
 | vk      | get_sticker_info    | `sticker_id` - ID стикера                            | Получает информацию о стикере и стикер-паке           |
 | vk      | get_groups          | `user_id` - VK ID пользователя                       | Получает список групп пользователя                    |
 | vk      | get_apps            | `user_id` - VK ID пользователя                       | Получает список приложений пользователя               |
+| vk      | search_playlists    | `q` - Поисковая строка                               | Получает список плейлистов                            |
+| vk      | search_audio        | `q` - Поисковая строка                               | Получает список аудиозаписей                          |
+| vk      | testers_get_info    | `user_id` - VK ID пользователя                       | Получает информацио о пользователе в программе VK Testers |
+| vk      | experts_get_info    | `user_id` - VK ID пользователя                       | Получает информацио о пользователе в программе VK Experts |
 | profile | get                 | `user_id` - VK ID пользователя                       | Получает информацию о профиле                         |
 | profile | buy_premium         |                                                      | Получение premium статуса                             |
 | profile | buy_limit           | `amount` - количество запросов                       | Покупка лимита                                        |

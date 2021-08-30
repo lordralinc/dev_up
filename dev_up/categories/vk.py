@@ -52,6 +52,55 @@ class VkAPICategories(BaseAPICategories):
             dataclass=models.VkGetApps
         )
 
+    def search_playlists(self, q: str, key: str = None, **kwargs) -> models.VkSearchPlaylists:
+        """Получает список плейлистов
+
+        :param q: Поисковая строка
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.searchPlaylists',
+            data=dict(q=q, key=key, **kwargs),
+            dataclass=models.VkSearchPlaylists
+        )
+    
+    def search_audio(self, q: str, key: str = None, **kwargs) -> models.VkSearchAudio:
+        """Получает список аудиозаписей
+
+        :param q: Поисковая строка
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.searchAudio',
+            data=dict(q=q, key=key, **kwargs),
+            dataclass=models.VkSearchAudio
+        )
+
+    def testers_get_info(self, user_id: int, key: str = None, **kwargs) -> models.VkTestersGetInfo:
+        """Получает информацио о пользователе в программе VK Testers
+
+        :param user_id: VK ID пользователя
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.testersGetInfo',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkTestersGetInfo
+        )
+
+    def experts_get_info(self, user_id: int, key: str = None, **kwargs) -> models.VkTestersGetInfo:
+        """Получает информацио о пользователе в программе VK Experts
+
+        :param user_id: VK ID пользователя
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.expertsGetInfo',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkTestersGetInfo
+        )
+
+
     async def get_stickers_async(self, user_id: int, key: str = None, **kwargs) -> models.VkGetStickers:
         """Получает список стикеров пользователя
 
@@ -98,4 +147,52 @@ class VkAPICategories(BaseAPICategories):
             method='vk.getApps',
             data=dict(user_id=user_id, key=key, **kwargs),
             dataclass=models.VkGetApps
+        )
+
+    async def search_playlists_async(self, q: str, key: str = None, **kwargs) -> models.VkSearchPlaylists:
+        """Получает список плейлистов
+
+        :param q: Поисковая строка
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.searchPlaylists',
+            data=dict(q=q, key=key, **kwargs),
+            dataclass=models.VkSearchPlaylists
+        )
+    
+    async def search_audio_async(self, q: str, key: str = None, **kwargs) -> models.VkSearchAudio:
+        """Получает список аудиозаписей
+
+        :param q: Поисковая строка
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.searchAudio',
+            data=dict(q=q, key=key, **kwargs),
+            dataclass=models.VkSearchAudio
+        )
+
+    async def testers_get_info_async(self, user_id: int, key: str = None, **kwargs) -> models.VkTestersGetInfo:
+        """Получает информацио о пользователе в программе VK Testers
+
+        :param user_id: VK ID пользователя
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.testersGetInfo',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkTestersGetInfo
+        )
+
+    async def experts_get_info_async(self, user_id: int, key: str = None, **kwargs) -> models.VkTestersGetInfo:
+        """Получает информацио о пользователе в программе VK Experts
+
+        :param user_id: VK ID пользователя
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.expertsGetInfo',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkTestersGetInfo
         )
