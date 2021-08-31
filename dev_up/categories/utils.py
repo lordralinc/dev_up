@@ -65,6 +65,14 @@ class UtilsAPICategories(BaseAPICategories):
             dataclass=models.UtilsNumberIdentifier
         )
 
+    def check_link(self, url: str, key: str = None, **kwargs) -> models.UtilsCheckLink:
+        """Получает адрес, на который ведет сокращенная ссылка"""
+        return self.api.make_request(
+            method="utils.checkLink",
+            data=dict(url=url, key=key, **kwargs),
+            dataclass=models.UtilsCheckLink
+        )
+
 
     async def md5_generate_async(self, text: str, key: str = None, **kwargs) -> models.UtilsMD5Generate:
         """Получить хэш md5 из текста
@@ -123,4 +131,12 @@ class UtilsAPICategories(BaseAPICategories):
             method="utils.number_identifier",
             data=dict(number=number, key=key, **kwargs),
             dataclass=models.UtilsNumberIdentifier
+        )
+
+    async def check_link_async(self, url: str, key: str = None, **kwargs) -> models.UtilsCheckLink:
+        """Получает адрес, на который ведет сокращенная ссылка"""
+        return await self.api.make_request_async(
+            method="utils.checkLink",
+            data=dict(url=url, key=key, **kwargs),
+            dataclass=models.UtilsCheckLink
         )

@@ -39,7 +39,7 @@ class APICategoriesABC(ABC):
 
     @property
     @abstractmethod
-    def vk(self) -> "BaseAPICategoriesABC":
+    def audio(self) -> "BaseAPICategoriesABC":
         ...
 
     @property
@@ -49,5 +49,15 @@ class APICategoriesABC(ABC):
 
     @property
     @abstractmethod
-    def audio(self) -> "BaseAPICategoriesABC":
+    def utils(self) -> "BaseAPICategoriesABC":
+        ...
+    
+    @property
+    @abstractmethod
+    def vk(self) -> "BaseAPICategoriesABC":
+        ...
+
+    @property
+    @abstractmethod
+    def warface(self) -> "BaseAPICategoriesABC":
         ...

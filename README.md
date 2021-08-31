@@ -90,3 +90,5 @@ custom = await api.make_request_async(
 | utils   | notifications_links | `code` - код ссылки<br>`status` - статус уведомлений | Управление уведомлениями от ссылок                    |
 | utils   | get_web_info        | `address` - IP или URL                               | Информация о сервере                                  |
 | utils   | number_identifier   | `number` - номер телефона                            | Информация о номере телефона                          |
+| utils   | check_link          | `url` - ссылка                                       | Получает адрес, на который ведет сокращенная ссылка   |
+| warface | get_info            | `nick` - ник игрока, `type` - тип информации         | Получает информацию об игроке Warface                 |
