@@ -1,5 +1,5 @@
-from datetime import datetime
-from typing import Optional
+from datetime import datetime, timedelta
+from typing import Optional, Union
 
 from pydantic import BaseModel
 
@@ -24,7 +24,7 @@ class ProfileGetResponse(BaseModel):
     first_name: str
     last_name: str
     verified: int
-    premium: bool
+    premium: Union[int, bool]
     unlimited: bool
     ban: bool
     banip: bool
@@ -37,13 +37,25 @@ class ProfileGetResponse(BaseModel):
     api: Optional[ProfileGetResponseApi]
 
     @property
-    def last_online_datetime(self):
+    def last_online_datetime(self) -> datetime:
         return datetime.fromtimestamp(self.last_online / 1000)
 
     @property
-    def req_datetime(self):
+    def req_datetime(self) -> datetime:
         return datetime.fromtimestamp(self.req_time / 1000)
+    
+    @property
+    def premium_datetime(self) -> datetime:
+        if isinstance(self.premium, bool):
+            raise ValueError("User don't have premium")
+        return datetime.fromtimestamp(self.premium / 1000)
 
+
+    @property
+    def premium_timedelta(self) -> timedelta:
+        if isinstance(self.premium, bool):
+            raise ValueError("User don't have premium")
+        return datetime.fromtimestamp(self.premium / 1000) - datetime.now()
 
 class ProfileGet(BaseModel):
     response: ProfileGetResponse
