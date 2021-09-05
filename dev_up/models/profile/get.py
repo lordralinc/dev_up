@@ -44,19 +44,20 @@ class ProfileGetResponse(BaseModel):
     @property
     def req_datetime(self) -> datetime:
         return datetime.fromtimestamp(self.req_time / 1000)
+
+    @property
+    def have_premium(self) -> bool:
+        return not (isinstance(self.premium, bool) or self.premium == 0)
     
     @property
     def premium_datetime(self) -> datetime:
-        if isinstance(self.premium, bool):
+        if not self.have_premium:
             raise ValueError("User don't have premium")
         return datetime.fromtimestamp(self.premium / 1000)
 
-
     @property
     def premium_timedelta(self) -> timedelta:
-        if isinstance(self.premium, bool):
-            raise ValueError("User don't have premium")
-        return datetime.fromtimestamp(self.premium / 1000) - datetime.now()
+        return self.premium_datetime - datetime.now()
 
 class ProfileGet(BaseModel):
     response: ProfileGetResponse
