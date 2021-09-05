@@ -14,27 +14,28 @@ class ProfileGetResponseApi(BaseModel):
 
 
 class ProfileGetResponseLP(BaseModel):
-    created: bool
-    status: bool
+    created: bool = False
+    status: bool = False
 
 
 class ProfileGetResponse(BaseModel):
     id: int
     id_vk: int
     first_name: str
-    last_name: str
-    verified: int
-    premium: Union[int, bool]
-    unlimited: bool
-    ban: bool
-    banip: bool
-    tester: bool
-    lp: ProfileGetResponseLP
-    notifications: bool
+    last_name: str 
     last_ip: Optional[str]
     last_online: int
     req_time: int
     api: Optional[ProfileGetResponseApi]
+    verified: int = False    
+    notifications: bool = False
+    premium: Union[int, bool] = False
+    unlimited: bool = False
+    ban: bool = False
+    banip: bool = False
+    tester: bool = False
+
+    lp: ProfileGetResponseLP = ProfileGetResponseLP()
 
     @property
     def last_online_datetime(self) -> datetime:
