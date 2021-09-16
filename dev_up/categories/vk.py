@@ -1,3 +1,5 @@
+import typing as ty
+
 from dev_up import models
 from dev_up.categories.base import BaseAPICategories
 
@@ -100,6 +102,31 @@ class VkAPICategories(BaseAPICategories):
             dataclass=models.VkTestersGetInfo
         )
 
+    
+    def group_get_managers(self, group_id: ty.Union[str, int], key: str = None, **kwargs) -> models.VkGrouGetManagers:
+        """Получает информацио об администраторах группы
+
+        :param group: VK ID группы
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.groupGetManagers',
+            data=dict(group_id=group_id, key=key, **kwargs),
+            dataclass=models.VkGrouGetManagers
+        )
+
+    def user_get_subscriptions(self, user_id: int, key: str = None, **kwargs) -> models.VkUserGetSubscriptions:
+        """Получает информацио об подписках польователя
+
+        :param group: VK ID польователя
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.userGetSubscriptions',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkUserGetSubscriptions
+        )
+
 
     async def get_stickers_async(self, user_id: int, key: str = None, **kwargs) -> models.VkGetStickers:
         """Получает список стикеров пользователя
@@ -195,4 +222,28 @@ class VkAPICategories(BaseAPICategories):
             method='vk.expertsGetInfo',
             data=dict(user_id=user_id, key=key, **kwargs),
             dataclass=models.VkTestersGetInfo
+        )
+
+    async def group_get_managers_async(self, group_id: ty.Union[str, int], key: str = None, **kwargs) -> models.VkGrouGetManagers:
+        """Получает информацио об администраторах группы
+
+        :param group: VK ID группы
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.groupGetManagers',
+            data=dict(group_id=group_id, key=key, **kwargs),
+            dataclass=models.VkGrouGetManagers
+        )
+
+    async def user_get_subscriptions_async(self, user_id: int, key: str = None, **kwargs) -> models.VkUserGetSubscriptions:
+        """Получает информацио об подписках польователя
+
+        :param group: VK ID польователя
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.userGetSubscriptions',
+            data=dict(user_id=user_id, key=key, **kwargs),
+            dataclass=models.VkUserGetSubscriptions
         )
