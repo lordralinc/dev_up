@@ -22,8 +22,7 @@ T = TypeVar('T', dict, AttrDict, BaseModel)
 
 
 class DevUpAPI(DevUpAPIABC, APICategories):
-
-    URL = "https://api.dev-up.ru/method/{method}"
+    URL = "https://{module}.dev-up.ru/method/{method}"
 
     @property
     def api_instance(self) -> "DevUpAPI":
@@ -53,19 +52,20 @@ class DevUpAPI(DevUpAPIABC, APICategories):
             f")>"
         )
 
-    def make_request(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
+    def make_request(self, method: str, data: dict = None, dataclass: Type[T] = AttrDict, module: str = 'api') -> T:
         """Выполняет запрос к серверу DEV-UP
 
         :param method: Название метода
         :param data: Параметры
         :param dataclass: Датакласс, который влияет на тип выходного значения
+        :param module: модуль
         :return: Результат запроса
         """
         if data is None:
             data = dict()
         data['key'] = data.get('key', None) or self._token
 
-        request_url = self.URL.format(method=method)
+        request_url = self.URL.format(module=module, method=method)
         logger.debug(
             f"Make post request to {request_url} with data {self.data_to_print(data)}. Timeout {self.timeout}"
         )
@@ -75,19 +75,27 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         logger.debug(f"Response: {response_json}. Use dataclass {dataclass.__name__}.")
         return self.validate_response(response_json, dataclass)
 
-    async def make_request_async(self, method: str, data=None, dataclass: Type[T] = AttrDict) -> T:
+    async def make_request_async(
+            self,
+            method: str,
+            data: dict = None,
+            dataclass: Type[T] = AttrDict,
+            module: str = 'api'
+    ) -> T:
         """Выполняет запрос к серверу DEV-UP (асинхронно)
+
 
         :param method: Название метода
         :param data: Параметры
         :param dataclass: Датакласс, который влияет на тип выходного значения
+        :param module: модуль
         :return: Результат запроса
         """
         if data is None:
             data = dict()
         data['key'] = data.get('key', None) or self._token
 
-        request_url = self.URL.format(method=method)
+        request_url = self.URL.format(module=module, method=method)
         logger.debug(
             f"Make async post request to {request_url} with data {self.data_to_print(data)}. Timeout {self.timeout}"
         )
@@ -97,7 +105,6 @@ class DevUpAPI(DevUpAPIABC, APICategories):
                 response_json = await response.json()
                 logger.debug(f"Response: {response_json}.")
                 return self.validate_response(response_json, dataclass)
-
 
     def validate_response(self, response: Dict, dataclass: Type[T]) -> T:
         if 'err' in response:

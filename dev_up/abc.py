@@ -1,5 +1,10 @@
 import asyncio
+import typing as ty
+from attrdict import AttrDict
+from pydantic import BaseModel
 from abc import ABC, abstractmethod
+
+T = ty.TypeVar('T', dict, AttrDict, BaseModel)
 
 
 class DevUpAPIABC(ABC):
@@ -13,16 +18,20 @@ class DevUpAPIABC(ABC):
     def make_request(
             self,
             method: str,
-            data=None
-    ) -> dict:
+            data: dict = None,
+            dataclass: ty.Type[T] = AttrDict,
+            module: str = 'api'
+    ) -> T:
         ...
 
     @abstractmethod
     async def make_request_async(
             self,
             method: str,
-            data=None
-    ) -> dict:
+            data: dict = None,
+            dataclass: ty.Type[T] = AttrDict,
+            module: str = 'api'
+    ) -> T:
         ...
 
     @property
