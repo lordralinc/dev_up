@@ -20,7 +20,7 @@ class DevUpAPIABC(ABC):
             method: str,
             data: dict = None,
             dataclass: ty.Type[T] = AttrDict,
-            module: str = 'api'
+            url: ty.Callable[[str, str], str] = lambda a, b: a
     ) -> T:
         ...
 
@@ -30,7 +30,7 @@ class DevUpAPIABC(ABC):
             method: str,
             data: dict = None,
             dataclass: ty.Type[T] = AttrDict,
-            module: str = 'api'
+            url: ty.Callable[[str, str], str] = lambda a, b: a
     ) -> T:
         ...
 

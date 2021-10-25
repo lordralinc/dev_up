@@ -1,5 +1,5 @@
 import asyncio
-from typing import Type, TypeVar, Dict
+from typing import Type, TypeVar, Dict, Callable
 
 import aiohttp
 import requests
@@ -21,8 +21,15 @@ except ImportError:
 T = TypeVar('T', dict, AttrDict, BaseModel)
 
 
+def url_generator(base_url: str, method: str) -> str:
+    return "https://api.{base_url}/method/{method}".format(
+        base_url=base_url,
+        method=method
+    )
+
+
 class DevUpAPI(DevUpAPIABC, APICategories):
-    URL = "https://{module}.dev-up.ru/method/{method}"
+    BASE_DOMAIN = "dev-up.ru"
 
     @property
     def api_instance(self) -> "DevUpAPI":
@@ -52,20 +59,26 @@ class DevUpAPI(DevUpAPIABC, APICategories):
             f")>"
         )
 
-    def make_request(self, method: str, data: dict = None, dataclass: Type[T] = AttrDict, module: str = 'api') -> T:
+    def make_request(
+            self,
+            method: str,
+            data: dict = None,
+            dataclass: Type[T] = AttrDict,
+            url: Callable[[str, str], str] = url_generator
+    ) -> T:
         """Выполняет запрос к серверу DEV-UP
 
         :param method: Название метода
         :param data: Параметры
         :param dataclass: Датакласс, который влияет на тип выходного значения
-        :param module: модуль
+        :param url: Генератор URL
         :return: Результат запроса
         """
         if data is None:
             data = dict()
         data['key'] = data.get('key', None) or self._token
 
-        request_url = self.URL.format(module=module, method=method)
+        request_url = url(self.BASE_DOMAIN, method)
         logger.debug(
             f"Make post request to {request_url} with data {self.data_to_print(data)}. Timeout {self.timeout}"
         )
@@ -80,7 +93,7 @@ class DevUpAPI(DevUpAPIABC, APICategories):
             method: str,
             data: dict = None,
             dataclass: Type[T] = AttrDict,
-            module: str = 'api'
+            url: Callable[[str, str], str] = url_generator
     ) -> T:
         """Выполняет запрос к серверу DEV-UP (асинхронно)
 
@@ -88,14 +101,14 @@ class DevUpAPI(DevUpAPIABC, APICategories):
         :param method: Название метода
         :param data: Параметры
         :param dataclass: Датакласс, который влияет на тип выходного значения
-        :param module: модуль
+        :param url: Генератор URL
         :return: Результат запроса
         """
         if data is None:
             data = dict()
         data['key'] = data.get('key', None) or self._token
 
-        request_url = self.URL.format(module=module, method=method)
+        request_url = url(self.BASE_DOMAIN, method)
         logger.debug(
             f"Make async post request to {request_url} with data {self.data_to_print(data)}. Timeout {self.timeout}"
         )
