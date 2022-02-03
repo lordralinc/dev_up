@@ -104,7 +104,7 @@ class VkAPICategories(BaseAPICategories):
 
     
     def group_get_managers(self, group_id: ty.Union[str, int], key: str = None, **kwargs) -> models.VkGrouGetManagers:
-        """Получает информацио об администраторах группы
+        """Получает информацию об администраторах группы
 
         :param group: VK ID группы
         :param key: Ключ доступа
@@ -113,6 +113,18 @@ class VkAPICategories(BaseAPICategories):
             method='vk.groupGetManagers',
             data=dict(group_id=group_id, key=key, **kwargs),
             dataclass=models.VkGrouGetManagers
+        )
+
+    def set_steps(self, access_token: str, key: str = None, **kwargs) -> models.VkSetSteps:
+        """Устанавливает количество шагов
+
+        :param access_token: Токен VK Me
+        :param key: Ключ доступа
+        """
+        return self.api.make_request(
+            method='vk.setSteps',
+            data=dict(access_token=access_token, key=key, **kwargs),
+            dataclass=models.VkSetSteps
         )
 
     def user_get_subscriptions(self, user_id: int, key: str = None, **kwargs) -> models.VkUserGetSubscriptions:
@@ -246,4 +258,16 @@ class VkAPICategories(BaseAPICategories):
             method='vk.userGetSubscriptions',
             data=dict(user_id=user_id, key=key, **kwargs),
             dataclass=models.VkUserGetSubscriptions
+        )
+
+    async def set_steps_async(self, access_token: str, key: str = None, **kwargs) -> models.VkSetSteps:
+        """Устанавливает количество шагов
+
+        :param access_token: Токен VK Me
+        :param key: Ключ доступа
+        """
+        return await self.api.make_request_async(
+            method='vk.setSteps',
+            data=dict(access_token=access_token, key=key, **kwargs),
+            dataclass=models.VkSetSteps
         )

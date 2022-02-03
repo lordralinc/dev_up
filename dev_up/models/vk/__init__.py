@@ -6,5 +6,6 @@ from .get_stickers import *
 from .group_get_managers import *
 from .search_audio import *
 from .search_playlists import *
+from .set_steps import *
 from .testers_get_info import *
 from .user_get_subscriptions import *
