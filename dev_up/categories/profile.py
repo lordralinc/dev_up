@@ -1,87 +1,89 @@
+import typing as ty
+
 from dev_up import models
-from dev_up.categories.base import BaseAPICategories
+from dev_up.base.category import APICategory
 
 
-class ProfileAPICategories(BaseAPICategories):
+class ProfileAPICategory(APICategory):
 
-    def get(self, user_id: int = None, key: str = None, **kwargs) -> models.ProfileGet:
-        """Получает информацию о профиле DEV-UP"""
-        return self.api.make_request(
-            method='profile.get',
-            data=dict(user_id=user_id, key=key, **kwargs),
-            dataclass=models.ProfileGet
+    async def buy_limit(
+            self,
+            amount: int,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.ProfileBuyLimitResponse:
+        """Покупка лимита
+
+        :param amount: количество
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="profile.buyLimit",
+            data=dict(amount=amount),
+            access_token=access_token,
+            request_model=models.ProfileBuyLimitRequest,
+            response_model=models.ProfileBuyLimitResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )
 
-    def buy_premium(self, key: str = None, **kwargs) -> models.ProfileBuyPremium:
-        """Получение premium статуса"""
-        return self.api.make_request(
-            method='profile.buyPremium',
-            data=dict(key=key, **kwargs),
-            dataclass=models.ProfileBuyPremium
-        )
+    async def buy_premium(
+            self,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.ProfileBuyPremiumResponse:
+        """Покупка premium статуса
 
-    def buy_limit(self, amount: int, key: str = None, **kwargs) -> models.ProfileBuyLimit:
-        """Покупка лимита"""
-        return self.api.make_request(
-            method='profile.buyLimit',
-            data=dict(amount=amount, key=key, **kwargs),
-            dataclass=models.ProfileBuyLimit
-        )
-
-    def get_balance_link(self, amount: int, vk: int, key: str = None, **kwargs) -> models.ProfileGetBalanceLink:
-        """Получение ссылки на пополнение баланса"""
-        return self.api.make_request(
-            method='profile.getBalanceLink',
-            data=dict(amount=amount, vk=vk, key=key, **kwargs),
-            dataclass=models.ProfileGetBalanceLink
-        )
-
-    def set_key(self) -> models.ProfileSetKey:
-        """Обнуление ключа доступа"""
-        return self.api.make_request(
-            method='profile.setKey',
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="profile.buyPremium",
             data=dict(),
-            dataclass=models.ProfileSetKey
+            access_token=access_token,
+            request_model=models.ProfileBuyPremiumRequest,
+            response_model=models.ProfileBuyPremiumResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )
 
-    async def get_async(self, key: str = None, **kwargs) -> models.ProfileGet:
-        """Получает информацию о профиле DEV-UP"""
-        return await self.api.make_request_async(
-            method='profile.get',
-            data=dict(key=key, **kwargs),
-            dataclass=models.ProfileGet
-        )
+    async def get(
+            self,
+            user_id: int = None,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.ProfileGetResponse:
+        """Получает информацию о профиле DEV-UP
 
-    async def buy_premium_async(self, key: str = None, **kwargs) -> models.ProfileBuyPremium:
-        """Получение premium статуса"""
-        return await self.api.make_request_async(
-            method='profile.buyPremium',
-            data=dict(key=key, **kwargs),
-            dataclass=models.ProfileBuyPremium
-        )
-
-    async def buy_limit_async(self, amount: int, key: str = None, **kwargs) -> models.ProfileBuyLimit:
-        """Покупка лимита"""
-        return await self.api.make_request_async(
-            method='profile.buyLimit',
-            data=dict(amount=amount, key=key, **kwargs),
-            dataclass=models.ProfileBuyLimit
-        )
-
-    async def get_balance_link_async(
-            self, amount: int, vk: int, key: str = None, **kwargs
-    ) -> models.ProfileGetBalanceLink:
-        """Получение ссылки на пополнение баланса"""
-        return await self.api.make_request_async(
-            method='profile.getBalanceLink',
-            data=dict(amount=amount, vk=vk, key=key, **kwargs),
-            dataclass=models.ProfileGetBalanceLink
-        )
-
-    async def set_key_async(self, **kwargs) -> models.ProfileSetKey:
-        """Обнуление ключа доступа"""
-        return await self.api.make_request_async(
-            method='profile.setKey',
-            data=dict(**kwargs),
-            dataclass=models.ProfileSetKey
+        :param user_id: ID пользователя
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="profile.get",
+            data=dict(user_id=user_id),
+            access_token=access_token,
+            request_model=models.ProfileGetRequest,
+            response_model=models.ProfileGetResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )

@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "dev_up"
+version = "2.0.0"
+description = "Библиотека для работы с сервисом DEV-UP."
+authors = ["lordralinc"]
+license = "MIT"
+homepage = "https://github.com/lordralinc/dev_up"
+readme = "README.md"
+keywords = [
+    "async", "api"
+]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: Russian",
+    "Typing :: Typed",
+    "Topic :: Utilities",
+    "Python :: 3.10",
+    "Python :: 3.9",
+    "Python :: 3.8",
+]
+
+[tool.poetry.dependencies]
+python = ">3.7,<4.0"
+loguru = "^0.5.3"
+aiohttp = "^3.8.1"
+pydantic = "^1.8.2"
+Pygments = "^2.10.0"
+update = "^0.0.1"
+requests = "^2.26.0"
+cachetools = "^4.2.4"
+
+
+[tool.poetry.dev-dependencies]
+ipython = "^7.29.0"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pytest-mock = "^3.6.1"
+pytest-asyncio = "^0.16.0"
+tox = "^3.23.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

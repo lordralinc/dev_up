@@ -1,142 +1,175 @@
-from typing import Union
+import typing as ty
 
 from dev_up import models
-from dev_up.categories.base import BaseAPICategories
+from dev_up.base.category import APICategory
 
 
-class UtilsAPICategories(BaseAPICategories):
+class UtilsAPICategory(APICategory):
 
-    def md5_generate(self, text: str, key: str = None, **kwargs) -> models.UtilsMD5Generate:
-        """Получить хэш md5 из текста
+    async def check_link(
+            self,
+            url: str,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsCheckLinkResponse:
+        """Получает адрес, на который ведет сокращенная ссылка
 
-        :param text: текст
-        :param key: Ключ доступа
+        :param url: проверяемая ссылка
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
         """
-        return self.api.make_request(
-            method='utils.md5Generate',
-            data=dict(text=text, key=key, **kwargs),
-            dataclass=models.UtilsMD5Generate
+        return await self.api.make_request(
+            method="utils.checkLink",
+            data=dict(url=url),
+            access_token=access_token,
+            request_model=models.UtilsCheckLinkRequest,
+            response_model=models.UtilsCheckLinkResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )
 
-    def get_server_time(self, key: str = None, **kwargs) -> models.UtilsGetServerTime:
-        """Возвращает текущее время на сервере в unixtime (МСК)"""
-        return self.api.make_request(
-            method="utils.getServerTime",
-            data=dict(key=key, **kwargs),
-            dataclass=models.UtilsGetServerTime
-        )
+    async def create_short_link(
+            self,
+            url: str,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsCreateShortLinkResponse:
+        """Сокращение ссылок
 
-    def create_short_link(self, url: str, key: str = None, **kwargs) -> models.UtilsCreateShortLink:
-        """Сокращение ссылок"""
-        return self.api.make_request(
+        :param url: ссылка
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
             method="utils.createShortLink",
-            data=dict(url=url, key=key, **kwargs),
-            dataclass=models.UtilsCreateShortLink
+            data=dict(url=url),
+            access_token=access_token,
+            request_model=models.UtilsCreateShortLinkRequest,
+            response_model=models.UtilsCreateShortLinkResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )
 
-    # noinspection PyArgumentList
-    def notifications_links(
+    async def get_server_time(
+            self,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsGetServerTimeResponse:
+        """Возвращает текущее время на сервере
+
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="utils.getServerTime",
+            data=dict(),
+            access_token=access_token,
+            request_model=models.UtilsGetServerTimeRequest,
+            response_model=models.UtilsGetServerTimeResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
+        )
+
+    async def get_web_info(
+            self,
+            address: str,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsGetWebInfoResponse:
+        """Информация о сервере
+
+        :param address: URL или IP сервера
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="utils.getWebInfo",
+            data=dict(address=address),
+            access_token=access_token,
+            request_model=models.UtilsGetWebInfoRequest,
+            response_model=models.UtilsGetWebInfoResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
+        )
+
+    async def md5_generate(
+            self,
+            text: str,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsMD5GenerateResponse:
+        """Получить хэш md5 от текста
+
+        :param text: значение от которого необходимо получить хэш
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
+        """
+        return await self.api.make_request(
+            method="utils.md5Generate",
+            data=dict(text=text),
+            access_token=access_token,
+            request_model=models.UtilsMD5GenerateRequest,
+            response_model=models.UtilsMD5GenerateResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
+        )
+
+    async def notifications_links(
             self,
             code: str,
-            status: Union[int, models.NotificationsLinksStatus],
-            key: str = None,
-            **kwargs
-    ) -> models.UtilsNotificationsLinks:
-        """Управление уведомлениями от ссылок"""
-        return self.api.make_request(
-            method="utils.notificationsLinks",
-            data=dict(code=code, status=models.NotificationsLinksStatus(status).value, key=key, **kwargs),
-            dataclass=models.UtilsNotificationsLinks
-        )
+            status: models.UtilsNotificationsLinksStatus,
+            *,
+            access_token: ty.Optional[str] = None,
+            raise_error: bool = None,
+            raw_response: bool = None,
+            use_cache: bool = None
+    ) -> models.UtilsNotificationsLinksResponse:
+        """Получить хэш md5 от текста
 
-    def get_web_info(self, address: str, key: str = None, **kwargs) -> models.UtilsGetWebInfo:
-        """Информация о сервере"""
-        return self.api.make_request(
-            method="utils.getWebInfo",
-            data=dict(address=address, key=key, **kwargs),
-            dataclass=models.UtilsGetWebInfo
-        )
-
-    def number_identifier(self, number: str, key: str = None, **kwargs) -> models.UtilsNumberIdentifier:
-        """Информация о номере телефона"""
-        return self.api.make_request(
-            method="utils.number_identifier",
-            data=dict(number=number, key=key, **kwargs),
-            dataclass=models.UtilsNumberIdentifier
-        )
-
-    def check_link(self, url: str, key: str = None, **kwargs) -> models.UtilsCheckLink:
-        """Получает адрес, на который ведет сокращенная ссылка"""
-        return self.api.make_request(
-            method="utils.checkLink",
-            data=dict(url=url, key=key, **kwargs),
-            dataclass=models.UtilsCheckLink
-        )
-
-
-    async def md5_generate_async(self, text: str, key: str = None, **kwargs) -> models.UtilsMD5Generate:
-        """Получить хэш md5 из текста
-
-        :param text: текст
-        :param key: Ключ доступа
+        :param code: код ссылки
+        :param status: статус оповещений
+        :param access_token: токен
+        :param raise_error: вызывать исключение `DevUpResponseException`
+        :param raw_response: возвращать необработанный ответ
+        :param use_cache: использовать кэш
         """
-        return await self.api.make_request_async(
-            method='utils.md5Generate',
-            data=dict(text=text, key=key, **kwargs),
-            dataclass=models.UtilsMD5Generate
-        )
-
-    async def get_server_time_async(self, key: str = None, **kwargs) -> models.UtilsGetServerTime:
-        """Возвращает текущее время на сервере в unixtime (МСК)"""
-        return await self.api.make_request_async(
-            method="utils.getServerTime",
-            data=dict(key=key, **kwargs),
-            dataclass=models.UtilsGetServerTime
-        )
-
-    async def create_short_link_async(self, url: str, key: str = None, **kwargs) -> models.UtilsCreateShortLink:
-        """Сокращение ссылок"""
-        return await self.api.make_request_async(
-            method="utils.createShortLink",
-            data=dict(url=url, key=key, **kwargs),
-            dataclass=models.UtilsCreateShortLink
-        )
-
-    # noinspection PyArgumentList
-    async def notifications_links_async(
-            self,
-            code: str,
-            status: Union[int, models.NotificationsLinksStatus],
-            key: str = None,
-            **kwargs
-    ) -> models.UtilsNotificationsLinks:
-        """Управление уведомлениями от ссылок"""
-        return await self.api.make_request_async(
+        return await self.api.make_request(
             method="utils.notificationsLinks",
-            data=dict(code=code, status=models.NotificationsLinksStatus(status).value, key=key, **kwargs),
-            dataclass=models.UtilsNotificationsLinks
-        )
-
-    async def get_web_info_async(self, address: str, key: str = None, **kwargs) -> models.UtilsGetWebInfo:
-        """Информация о сервере"""
-        return await self.api.make_request_async(
-            method="utils.getWebInfo",
-            data=dict(address=address, key=key, **kwargs),
-            dataclass=models.UtilsGetWebInfo
-        )
-
-    async def number_identifier_async(self, number: str, key: str = None, **kwargs) -> models.UtilsNumberIdentifier:
-        """Информация о номере телефона"""
-        return await self.api.make_request_async(
-            method="utils.number_identifier",
-            data=dict(number=number, key=key, **kwargs),
-            dataclass=models.UtilsNumberIdentifier
-        )
-
-    async def check_link_async(self, url: str, key: str = None, **kwargs) -> models.UtilsCheckLink:
-        """Получает адрес, на который ведет сокращенная ссылка"""
-        return await self.api.make_request_async(
-            method="utils.checkLink",
-            data=dict(url=url, key=key, **kwargs),
-            dataclass=models.UtilsCheckLink
+            data=dict(code=code, status=status),
+            access_token=access_token,
+            request_model=models.UtilsNotificationsLinksRequest,
+            response_model=models.UtilsNotificationsLinksResponse,
+            raise_error=raise_error,
+            raw_response=raw_response,
+            use_cache=use_cache
         )
